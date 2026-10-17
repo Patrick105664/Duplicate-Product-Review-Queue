@@ -8,7 +8,7 @@ export async function apiRequest(path, options = {}) {
   });
   if (!response.ok) {
     const message = await response.text().catch(() => "");
-    throw new Error(message || `API request failed (${response.status})`);
+    throw Object.assign(new Error(message || `API request failed (${response.status})`), { status: response.status });
   }
   if (response.status === 204) return null;
   const type = response.headers.get("content-type") || "";

@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, ShieldCheck, ScanSearch, GitCompareArrows, CheckCircle2, Search, Bell, WandSparkles } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, ScanSearch, GitCompareArrows, CheckCircle2, Search } from "lucide-react";
+import HeadphonesA from "../components/illustrations/HeadphonesA";
+import HeadphonesB from "../components/illustrations/HeadphonesB";
+import WirelessEarbuds from "../components/illustrations/WirelessEarbuds";
+import BluetoothSpeaker from "../components/illustrations/BluetoothSpeaker";
 
 export default function Welcome() {
   return (
@@ -15,10 +19,6 @@ export default function Welcome() {
           <a href="#features">Features</a>
           <a href="#about">About</a>
         </nav>
-        <div className="landing-nav-actions">
-          <Link to="/login" className="landing-signin">Login</Link>
-          <Link to="/register" className="landing-nav-cta">Register <ArrowRight size={16} /></Link>
-        </div>
       </header>
 
       <section className="landing-hero" id="about">
@@ -42,14 +42,16 @@ export default function Welcome() {
             <div className="visual-review-card">
               <div className="visual-card-head"><div><span className="visual-kicker">REVIEW QUEUE / CG-024</span><h3>Possible product match</h3></div><span className="visual-status">Needs review</span></div>
               <div className="visual-products">
-                <div className="visual-product visual-product-a"><div className="product-art art-jacket"><span /></div><span className="visual-product-label">CATALOGUE A</span><strong>Classic lavender jacket</strong><small>SKU · JK-2048</small></div>
+                <div className="visual-product visual-product-a"><div className="product-art"><HeadphonesA /></div><span className="visual-product-label">CATALOGUE A</span><strong>AeroSound Wireless Headphones</strong><small>SKU · AS500-BLK</small></div>
                 <div className="visual-match"><span>VS</span><div /></div>
-                <div className="visual-product visual-product-b"><div className="product-art art-jacket art-jacket-two"><span /></div><span className="visual-product-label">CATALOGUE B</span><strong>Lavender cropped jacket</strong><small>SKU · JK-2084</small></div>
+                <div className="visual-product visual-product-b"><div className="product-art"><HeadphonesB /></div><span className="visual-product-label">CATALOGUE B</span><strong>AeroSound AS-500 Bluetooth Headphones</strong><small>SKU · AS500-BLK-2</small></div>
               </div>
               <div className="visual-score-row"><div><span className="visual-score-icon"><GitCompareArrows size={16} /></span><div><strong>Match confidence</strong><small>Based on product evidence</small></div></div><strong className="visual-score">92%</strong></div>
               <div className="visual-progress"><span /></div>
               <div className="visual-evidence"><span><CheckCircle2 size={14} /> Similar title</span><span><CheckCircle2 size={14} /> Same category</span><span className="evidence-caution"><ScanSearch size={14} /> Verify SKU</span></div>
               <div className="visual-card-actions"><span>Reviewer decision required</span><span className="visual-review-button">Review pair <ArrowRight size={13} /></span></div>
+              <div className="hero-accent hero-accent-earbuds"><WirelessEarbuds /></div>
+              <div className="hero-accent hero-accent-speaker"><BluetoothSpeaker /></div>
             </div>
             <div className="visual-float visual-float-left"><span className="float-icon"><ScanSearch size={17} /></span><span><strong>Evidence first</strong><small>Compare before deciding</small></span></div>
             <div className="visual-float visual-float-right"><span className="float-icon float-icon-purple"><ShieldCheck size={17} /></span><span><strong>Human in control</strong><small>Nothing merges automatically</small></span></div>

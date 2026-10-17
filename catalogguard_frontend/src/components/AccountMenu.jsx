@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { ChevronDown, LogOut, Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth, initials } from "../auth";
 
-export default function AccountMenu() {
+export default function AccountMenu({ open, onToggle, onClose }) {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const triggerRef = useRef(null);
   const menuId = "account-menu";
@@ -14,11 +13,11 @@ export default function AccountMenu() {
   useEffect(() => {
     if (!open) return undefined;
     const onPointerDown = (event) => {
-      if (!menuRef.current?.contains(event.target)) setOpen(false);
+      if (!menuRef.current?.contains(event.target)) onClose();
     };
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
-        setOpen(false);
+        onClose();
         triggerRef.current?.focus();
       }
     };
@@ -28,7 +27,7 @@ export default function AccountMenu() {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, onClose]);
 
   useEffect(() => {
     if (open) menuRef.current?.querySelector('[role="menuitem"]')?.focus();
@@ -49,7 +48,7 @@ export default function AccountMenu() {
   };
 
   const logout = () => {
-    setOpen(false);
+    onClose();
     signOut();
     navigate("/login", { replace: true });
   };
@@ -63,11 +62,11 @@ export default function AccountMenu() {
       aria-haspopup="menu"
       aria-expanded={open}
       aria-controls={menuId}
-      onClick={() => setOpen((isOpen) => !isOpen)}
+      onClick={onToggle}
       onKeyDown={(event) => {
         if (event.key === "ArrowDown" || event.key === "ArrowUp") {
           event.preventDefault();
-          setOpen(true);
+          onToggle();
         }
       }}
     >
@@ -80,7 +79,7 @@ export default function AccountMenu() {
         <span>{user?.email || user?.role || (user?.demo ? "Demo access" : "Catalogue operations")}</span>
       </div>
       <div className="account-menu-options">
-        <button className="account-menu-item" type="button" role="menuitem" onClick={() => { setOpen(false); navigate("/settings"); }}>
+        <button className="account-menu-item" type="button" role="menuitem" onClick={() => { onClose(); navigate("/settings"); }}>
           <Settings size={16} aria-hidden="true" /> <span>Account settings</span>
         </button>
         <button className="account-menu-item danger" type="button" role="menuitem" onClick={logout}>

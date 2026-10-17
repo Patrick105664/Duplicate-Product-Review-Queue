@@ -25,6 +25,7 @@ function Workspace() {
     <Route path="/compare/:pairId" element={<ProductComparison />} />
     <Route path="/catalogue" element={<Catalogue />} />
     <Route path="/scans" element={<ScanHistory />} />
+    <Route path="/scan-history" element={<ScanHistory />} />
     <Route path="/evaluation" element={<Evaluation />} />
     <Route path="/exports" element={<Exports />} />
     <Route path="/settings" element={<Settings />} />
