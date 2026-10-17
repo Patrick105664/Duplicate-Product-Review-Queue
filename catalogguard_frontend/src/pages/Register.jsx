@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../auth";
 import AuthLayout from "../components/AuthLayout";
+import AuthBackground from "../components/AuthBackground";
 
 const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -37,21 +38,24 @@ export default function Register() {
   );
 
   return (
-    <AuthLayout title="Create your account" subtitle="Register to start reviewing suggested duplicate products."
-      footer={<>Already have an account? <Link to="/login">Login</Link></>}>
-      <form onSubmit={submit} noValidate>
-        {field("name", "Name", { autoComplete: "name", placeholder: "Your full name" })}
-        {field("email", "Work email", { type: "email", autoComplete: "email", placeholder: "you@company.com" })}
-        <label className="auth-field">Password
-          <div className="auth-pw">
-            <input type={show ? "text" : "password"} value={f.password} onChange={set("password")} autoComplete="new-password" aria-invalid={!!errors.password} placeholder="At least 8 characters" />
-            <button type="button" aria-label={show ? "Hide password" : "Show password"} onClick={() => setShow(!show)}>{show ? <EyeOff size={16} /> : <Eye size={16} />}</button>
-          </div>
-          {errors.password && <span className="auth-error">{errors.password}</span>}
-        </label>
-        {field("confirm", "Confirm password", { type: show ? "text" : "password", autoComplete: "new-password", placeholder: "Re-enter your password" })}
-        <button type="submit" className="auth-submit">Register</button>
-      </form>
-    </AuthLayout>
+    <>
+      <AuthBackground />
+      <AuthLayout title="Create your account" subtitle="Register to start reviewing suggested duplicate products."
+        footer={<>Already have an account? <Link to="/login">Login</Link></>}>
+        <form onSubmit={submit} noValidate>
+          {field("name", "Name", { autoComplete: "name", placeholder: "Your full name" })}
+          {field("email", "Work email", { type: "email", autoComplete: "email", placeholder: "you@company.com" })}
+          <label className="auth-field">Password
+            <div className="auth-pw">
+              <input type={show ? "text" : "password"} value={f.password} onChange={set("password")} autoComplete="new-password" aria-invalid={!!errors.password} placeholder="At least 8 characters" />
+              <button type="button" aria-label={show ? "Hide password" : "Show password"} onClick={() => setShow(!show)}>{show ? <EyeOff size={16} /> : <Eye size={16} />}</button>
+            </div>
+            {errors.password && <span className="auth-error">{errors.password}</span>}
+          </label>
+          {field("confirm", "Confirm password", { type: show ? "text" : "password", autoComplete: "new-password", placeholder: "Re-enter your password" })}
+          <button type="submit" className="auth-submit">Register</button>
+        </form>
+      </AuthLayout>
+    </>
   );
 }

@@ -13,6 +13,7 @@ import Exports from "./pages/Exports";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Settings from "./pages/Settings";
 
 function Workspace() {
   const { user } = useAuth();
@@ -26,6 +27,7 @@ function Workspace() {
     <Route path="/scans" element={<ScanHistory />} />
     <Route path="/evaluation" element={<Evaluation />} />
     <Route path="/exports" element={<Exports />} />
+    <Route path="/settings" element={<Settings />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
   </Routes></main></div></div>;
 }

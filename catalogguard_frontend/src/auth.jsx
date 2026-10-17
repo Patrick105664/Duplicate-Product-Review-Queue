@@ -11,7 +11,13 @@ export function AuthProvider({ children }) {
   });
   const signIn = (u) => { localStorage.setItem(KEY, JSON.stringify(u)); setUser(u); };
   const signOut = () => { localStorage.removeItem(KEY); setUser(null); };
-  return <AuthContext.Provider value={{ user, signIn, signOut }}>{children}</AuthContext.Provider>;
+  const updateUser = (updates) => {
+    if (!user) return;
+    const updatedUser = { ...user, ...updates };
+    localStorage.setItem(KEY, JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+  return <AuthContext.Provider value={{ user, signIn, signOut, updateUser }}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => useContext(AuthContext);

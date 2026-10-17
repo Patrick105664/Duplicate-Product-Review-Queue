@@ -26,7 +26,7 @@ export default function Sidebar() {
     <div className="sidebar-bottom">
       <div className="sidebar-tip"><div className="tip-icon"><Activity size={17} /></div><strong>Review with confidence</strong><p>Every suggested match gets a human decision before any catalogue action.</p></div>
       <div className="profile-mini"><div className="avatar">{initials(user?.name)}</div><div><strong>{user?.name}</strong><small>{user?.demo ? "Demo access" : "Catalogue operations"}</small></div>
-        <button className="icon-button plain logout-btn" aria-label="Logout" title="Logout" onClick={() => { signOut(); navigate("/"); }}><LogOut size={16} /></button></div>
+        <button className="icon-button plain logout-btn" aria-label="Logout" title="Logout" onClick={() => { signOut(); navigate("/login", { replace: true }); }}><LogOut size={16} /></button></div>
     </div>
   </aside>;
 }

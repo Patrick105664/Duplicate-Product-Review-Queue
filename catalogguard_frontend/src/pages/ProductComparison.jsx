@@ -8,6 +8,7 @@ import StatusBadge from "../components/StatusBadge";
 import { getReviewPair } from "../api/reviews";
 import { getProducts } from "../api/products";
 import { submitDecision } from "../api/reviews";
+import { formatPackQuantity } from "../utils/formatters";
 
 export default function ProductComparison() {
   const { pairId } = useParams();
@@ -19,6 +20,8 @@ export default function ProductComparison() {
     Promise.all([getReviewPair(pairId), getProducts()]).then(([p, prods]) => { setPair(p); setProducts(prods || []); }).catch((e) => setError(e.message));
   }, [pairId]);
   const left = products.find((p) => p.id === pair?.leftId), right = products.find((p) => p.id === pair?.rightId);
+  const packQuantityMismatch = !!left && !!right && left.pack_quantity !== right.pack_quantity;
+  const sizeMismatch = !!left && !!right && left.size !== right.size;
   async function decide(decision, note) {
     try { await submitDecision(pair.id, decision, note); setPair({ ...pair, status: decision, decisionNote: note }); }
     catch (e) { setError(e.message); }
@@ -31,7 +34,7 @@ export default function ProductComparison() {
     <div className="comparison-layout"><div className="comparison-main">
       <div className="compare-cards"><ProductCard product={left} side="A" /><div className="compare-divider"><span>VS</span><div /></div><ProductCard product={right} side="B" /></div>
       <section className="panel attribute-panel"><div className="panel-heading"><div><h3>Attribute comparison</h3><p>Differences that may affect duplicate decisions</p></div></div><div className="attribute-table">
-        {[["Brand", left?.brand, right?.brand], ["Model", left?.model, right?.model], ["Title", left?.title, right?.title], ["Price", left ? `₹${left.price}` : "—", right ? `₹${right.price}` : "—"], ["SKU", left?.sku, right?.sku], ["Category", left?.category, right?.category]].map(([name, a, b]) => <div className="attribute-row" key={name}><strong>{name}</strong><span className={a !== b ? "attribute-diff" : ""}>{a || "—"}</span><span className={a !== b ? "attribute-diff" : ""}>{b || "—"}</span></div>)}
+        {[["Brand", left?.brand, right?.brand], ["Model", left?.model, right?.model], ["Title", left?.title, right?.title], ["Price", left ? `₹${left.price}` : "—", right ? `₹${right.price}` : "—"], ["SKU", left?.sku, right?.sku], ["Category", left?.category, right?.category], ["Pack quantity", left ? formatPackQuantity(left.pack_quantity) : "—", right ? formatPackQuantity(right.pack_quantity) : "—", packQuantityMismatch], ["Size", left?.size, right?.size, sizeMismatch]].map(([name, a, b, isMismatch]) => <div className={`attribute-row ${isMismatch ? "pack-quantity-mismatch" : ""}`} key={name}><strong>{name}</strong><span className={isMismatch || a !== b ? "attribute-diff" : ""}>{a || "—"}</span><span className={isMismatch || a !== b ? "attribute-diff" : ""}>{b || "—"}</span></div>)}
       </div></section>
       <section className="panel decision-panel"><div className="panel-heading"><div><h3>Reviewer decision</h3><p>Your decision is recorded for audit; no catalogue records are changed.</p></div><ShieldCheck size={20} /></div><ReviewActions onDecision={decide} disabled={pair.status !== "pending"} />{pair.status !== "pending" && <div className="decision-recorded"><ShieldCheck size={16} /> Decision recorded: <strong>{pair.status}</strong>{pair.decisionNote ? ` — ${pair.decisionNote}` : ""}</div>}</section>
     </div><aside className="comparison-aside"><EvidencePanel pair={pair} /><div className="safety-callout"><CircleAlert size={17} /><div><strong>Protect product variants</strong><p>A single item and a multipack are not duplicates. Similar titles alone are not sufficient evidence.</p></div></div></aside></div>

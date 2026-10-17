@@ -50,7 +50,7 @@ Expected endpoints used by the UI:
 - `GET /api/metrics`
 - `GET /api/exports?format=csv|json&type=reviews|products`
 
-Adjust `src/api/*.js` to match the backend contract if your endpoint names or response fields differ. The frontend expects products to have `id`, `title`, `brand`, `model`, `category`, `price`, `sku`, and optional `image`; pairs should have `id`, `leftId`, `rightId`, `score` (0–1), `status`, `reason`, and `signals`.
+Adjust `src/api/*.js` to match the backend contract if your endpoint names or response fields differ. Product records use the dataset fields `product_id`, `title`, `brand`, `model`, `pack_quantity`, and `size`; `productId` and `packQuantity` are also accepted as camelCase aliases. Optional product-detail fields such as `category`, `price`, `sku`, and `image` remain available to the comparison view. Missing text values normalize to `—`; absent or invalid pack quantities are inferred from an explicit “set/pack of N” title or default to 1. Pairs should have `id`, `leftId`, `rightId`, `score` (0–1), `status`, `reason`, and `signals`. `/api/metrics` can return `accuracy` as a percentage and optionally `accuracyCorrect` and `accuracyTotal`; when the percentage is omitted, the frontend derives it from those counts, otherwise it displays an unavailable value. False-merge cost fields (`labourMinutes`, `labourRatePerHour`, `downstreamLoss`, `remediationCost`, `falseMergeCount`, `falseMergeCostPerMerge`, and `falseMergeExposure`) are optional; missing values are calculated using `FALSE_MERGE_COST_CONFIG` and the precision counts.
 
 ## Important safety behavior
 

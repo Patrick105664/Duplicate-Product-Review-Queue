@@ -10,12 +10,22 @@ function downloadBlob(blob, filename) {
 }
 
 export async function exportData(format = "csv", kind = "reviews") {
-  if (!DEMO_MODE) {
+  if (!DEMO_MODE && kind !== "reviews") {
     const result = await apiRequest(`/api/exports?format=${format}&type=${kind}`);
     if (result instanceof Blob) downloadBlob(result, `catalogguard-${kind}.${format}`);
     return result;
   }
-  const rows = kind === "products" ? await getProducts() : await getReviewPairs();
+  const rows = kind === "products"
+    ? await getProducts()
+    : await getReviewPairs().then(async (pairs) => {
+      const products = await getProducts();
+      const productsById = new Map(products.map((product) => [product.id, product]));
+      return pairs.map((pair) => ({
+        ...pair,
+        leftPackQuantity: productsById.get(pair.leftId)?.packQuantity ?? null,
+        rightPackQuantity: productsById.get(pair.rightId)?.packQuantity ?? null
+      }));
+    });
   if (format === "json") {
     downloadBlob(new Blob([JSON.stringify(rows, null, 2)], { type: "application/json" }), `catalogguard-${kind}.json`);
     return;

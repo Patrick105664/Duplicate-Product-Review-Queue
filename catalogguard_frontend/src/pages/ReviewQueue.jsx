@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useQueue } from "../hooks/useQueue";
 import { useProducts } from "../hooks/useProducts";
 import StatusBadge from "../components/StatusBadge";
+import { formatPackQuantity } from "../utils/formatters";
 
 export default function ReviewQueue() {
   const { pairs, loading, error, refresh } = useQueue();
@@ -31,7 +32,7 @@ export default function ReviewQueue() {
         const a = products.find((p) => p.id === pair.leftId), b = products.find((p) => p.id === pair.rightId);
         return <article className="queue-card" key={pair.id}>
           <div className="queue-card-main"><div className="queue-card-top"><span className="table-id">{pair.id}</span><StatusBadge status={pair.status} /><span className={`score-pill ${pair.score >= .9 ? "high" : pair.score >= .7 ? "mid" : "low"}`}>{Math.round(pair.score * 100)}% match</span></div>
-            <div className="queue-products"><div className="queue-product"><img src={a?.image || "/images/product-placeholder.svg"} alt="" /><div><strong>{a?.title || pair.leftId}</strong><span>{a?.brand || "Unknown brand"} · {a?.model || "No model"}</span><b>₹{Number(a?.price || 0).toLocaleString("en-IN")}</b></div></div><div className="versus">VS</div><div className="queue-product"><img src={b?.image || "/images/product-placeholder.svg"} alt="" /><div><strong>{b?.title || pair.rightId}</strong><span>{b?.brand || "Unknown brand"} · {b?.model || "No model"}</span><b>₹{Number(b?.price || 0).toLocaleString("en-IN")}</b></div></div></div>
+            <div className="queue-products"><div className="queue-product"><img src={a?.image || "/images/product-placeholder.svg"} alt="" /><div><div className="queue-product-title"><strong>{a?.title || pair.leftId}</strong><span className="pack-quantity-badge">{formatPackQuantity(a?.pack_quantity)}</span></div><span>{a?.brand || "Unknown brand"} · {a?.model || "No model"} · {a?.size || "—"}</span><b>₹{Number(a?.price || 0).toLocaleString("en-IN")}</b></div></div><div className="versus">VS</div><div className="queue-product"><img src={b?.image || "/images/product-placeholder.svg"} alt="" /><div><div className="queue-product-title"><strong>{b?.title || pair.rightId}</strong><span className="pack-quantity-badge">{formatPackQuantity(b?.pack_quantity)}</span></div><span>{b?.brand || "Unknown brand"} · {b?.model || "No model"} · {b?.size || "—"}</span><b>₹{Number(b?.price || 0).toLocaleString("en-IN")}</b></div></div></div>
             <p className="queue-reason">{pair.reason}</p><div className="signal-tags">{(pair.signals || []).slice(0, 4).map((s) => <span key={s}>{s}</span>)}</div>
           </div><div className="queue-card-side"><span className="muted-label">Suggested status</span><strong>{pair.label || "Review required"}</strong><button className="button button-primary" onClick={() => navigate(`/compare/${pair.id}`)}><GitCompare size={15} /> Review pair</button></div>
         </article>;

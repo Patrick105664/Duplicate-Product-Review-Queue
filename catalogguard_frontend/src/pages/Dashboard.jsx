@@ -1,6 +1,6 @@
 import { useAuth } from "../auth";
 import React, { useEffect, useState } from "react";
-import { ArrowUpRight, CheckCircle2, Clock3, GitCompare, Package, Plus, ScanSearch, Sparkles } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, CircleAlert, Clock3, GitCompare, Package, Plus, ScanSearch, Sparkles } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import StatCard from "../components/StatCard";
 import DataTable from "../components/DataTable";
@@ -9,6 +9,7 @@ import { getReviewPairs } from "../api/reviews";
 import { getProducts } from "../api/products";
 import { startRescan } from "../api/scans";
 import { DEMO_MODE } from "../api/client";
+import { formatCurrencyINR } from "../utils/formatters";
 
 export default function Dashboard() {
   const [metrics, setMetrics] = useState(null);
@@ -50,7 +51,17 @@ export default function Dashboard() {
     </div>
     <div className="bottom-grid">
       <section className="panel quality-mini"><div className="panel-heading"><div><h3>Matching quality</h3><p>Evaluation metrics</p></div><Link to="/evaluation" className="text-link">Details <ArrowUpRight size={15} /></Link></div>
-        <div className="quality-metrics"><div><span>Precision</span><strong>{metrics?.precision ?? "—"}{metrics?.precision != null ? "%" : ""}</strong><div className="progress-track"><span style={{ width: `${metrics?.precision || 0}%` }} /></div><small>{metrics?.precisionCorrect ?? 0} correct / {metrics?.precisionReviewed ?? 0} reviewed</small></div><div><span>Recall</span><strong>{metrics?.recall ?? "—"}{metrics?.recall != null ? "%" : ""}</strong><div className="progress-track lavender-track"><span style={{ width: `${metrics?.recall || 0}%` }} /></div><small>{metrics?.recallFound ?? 0} found / {metrics?.recallExpected ?? 0} expected</small></div></div>
+        <div className="quality-metrics">
+          <div><span>Precision</span><strong>{metrics?.precision ?? "—"}{metrics?.precision != null ? "%" : ""}</strong><div className="progress-track"><span style={{ width: `${metrics?.precision || 0}%` }} /></div><small>{metrics?.precisionCorrect ?? 0} correct / {metrics?.precisionReviewed ?? 0} reviewed</small></div>
+          <div><span>Recall</span><strong>{metrics?.recall ?? "—"}{metrics?.recall != null ? "%" : ""}</strong><div className="progress-track lavender-track"><span style={{ width: `${metrics?.recall || 0}%` }} /></div><small>{metrics?.recallFound ?? 0} found / {metrics?.recallExpected ?? 0} expected</small></div>
+          <div><span>Accuracy</span><strong>{metrics?.accuracy ?? "—"}{metrics?.accuracy != null ? "%" : ""}</strong><div className="progress-track accuracy-track"><span style={{ width: `${metrics?.accuracy || 0}%` }} /></div><small>{metrics?.accuracyCorrect != null && metrics?.accuracyTotal != null ? `${metrics.accuracyCorrect} correct / ${metrics.accuracyTotal} decisions` : "Overall decision accuracy"}</small></div>
+          <div className="false-merge-metric">
+            <span className="metric-label-with-info">False merge cost <button className="metric-info" type="button" aria-label="About false merge cost" title={`Estimated damage per incorrect product merge. Formula: labour ${formatCurrencyINR((metrics?.labourMinutes || 0) / 60 * (metrics?.labourRatePerHour || 0))} + downstream loss ${formatCurrencyINR(metrics?.downstreamLoss)} + customer remediation ${formatCurrencyINR(metrics?.remediationCost)} = ${formatCurrencyINR(metrics?.falseMergeCostPerMerge)}.`}><CircleAlert size={13} /></button></span>
+            <strong>{metrics ? formatCurrencyINR(metrics.falseMergeCostPerMerge) : "—"}</strong>
+            <small>{metrics ? `${metrics.falseMergeCount} false merges x ${formatCurrencyINR(metrics.falseMergeCostPerMerge)} = ${formatCurrencyINR(metrics.falseMergeExposure)} est. exposure` : "Estimated correction and downstream cost"}</small>
+          </div>
+        </div>
+        <p className="false-merge-notice">Review the false merge cost before enabling bulk automation.</p>
         <p className="metric-disclaimer">{metrics?.note}</p>
       </section>
       <section className="panel safety-panel"><div className="safety-illustration"><div className="shield-orb"><CheckCircle2 size={28} /></div><div className="orb-dot dot-one" /><div className="orb-dot dot-two" /></div><div><h3>Human-first by design</h3><p>Accepting a match records a review decision only. Distinct product variants stay protected from accidental merges.</p><Link to="/evaluation" className="text-link">Read quality safeguards <ArrowUpRight size={15} /></Link></div></section>
