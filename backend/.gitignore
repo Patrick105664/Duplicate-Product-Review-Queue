@@ -1,0 +1,16 @@
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.bak
+!data/.gitkeep
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+
+# throwaway local checks
+smoke_check.py
+contract_check.py
+check_tables.py
+seed_demo.py
+shim.py

@@ -1,0 +1,11 @@
+product_a,product_b,actual_duplicate,predicted_duplicate,similarity_score,evidence,conflicts,correct
+X01,X02,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X03,X04,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X05,X06,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X07,X08,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X09,X10,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X11,X12,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X13,X14,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X15,X16,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X17,X18,True,True,1.0,Normalized titles match; Brand match; Model match; Pack Quantity match; Size match,,True
+X19,X20,False,False,1.0,Normalized titles match; Brand match; Model match; Size match,Pack quantities differ,True

@@ -1,0 +1,10 @@
+product_a,title_a,product_b,title_b,similarity_score,evidence,conflicts,review_status
+X01,Sample 1,X02,Sample 1,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,accepted
+X03,Sample 2,X04,Sample 2,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,rejected
+X05,Sample 3,X06,Sample 3,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,rejected
+X07,Sample 4,X08,Sample 4,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,pending
+X09,Sample 5,X10,Sample 5,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,pending
+X11,Sample 6,X12,Sample 6,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,pending
+X13,Sample 7,X14,Sample 7,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,pending
+X15,Sample 8,X16,Sample 8,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,pending
+X17,Sample 9,X18,Sample 9,1.0,Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match,,pending

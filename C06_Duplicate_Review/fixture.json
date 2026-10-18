@@ -1,0 +1,229 @@
+{
+  "case_id": "C06",
+  "synthetic": true,
+  "data_version": "v3.2",
+  "currency": "INR unless explicitly stated",
+  "missing_values": "null means unknown, never zero",
+  "records": {
+    "products": [
+      {
+        "product_id": "X01",
+        "brand": "Demo",
+        "model": "M1",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 1"
+      },
+      {
+        "product_id": "X02",
+        "brand": "Demo",
+        "model": "M1",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 1"
+      },
+      {
+        "product_id": "X03",
+        "brand": "Demo",
+        "model": "M2",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 2"
+      },
+      {
+        "product_id": "X04",
+        "brand": "Demo",
+        "model": "M2",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 2"
+      },
+      {
+        "product_id": "X05",
+        "brand": "Demo",
+        "model": "M3",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 3"
+      },
+      {
+        "product_id": "X06",
+        "brand": "Demo",
+        "model": "M3",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 3"
+      },
+      {
+        "product_id": "X07",
+        "brand": "Demo",
+        "model": "M4",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 4"
+      },
+      {
+        "product_id": "X08",
+        "brand": "Demo",
+        "model": "M4",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 4"
+      },
+      {
+        "product_id": "X09",
+        "brand": "Demo",
+        "model": "M5",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 5"
+      },
+      {
+        "product_id": "X10",
+        "brand": "Demo",
+        "model": "M5",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 5"
+      },
+      {
+        "product_id": "X11",
+        "brand": "Demo",
+        "model": "M6",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 6"
+      },
+      {
+        "product_id": "X12",
+        "brand": "Demo",
+        "model": "M6",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 6"
+      },
+      {
+        "product_id": "X13",
+        "brand": "Demo",
+        "model": "M7",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 7"
+      },
+      {
+        "product_id": "X14",
+        "brand": "Demo",
+        "model": "M7",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 7"
+      },
+      {
+        "product_id": "X15",
+        "brand": "Demo",
+        "model": "M8",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 8"
+      },
+      {
+        "product_id": "X16",
+        "brand": "Demo",
+        "model": "M8",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 8"
+      },
+      {
+        "product_id": "X17",
+        "brand": "Demo",
+        "model": "M9",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 9"
+      },
+      {
+        "product_id": "X18",
+        "brand": "Demo",
+        "model": "M9",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 9"
+      },
+      {
+        "product_id": "X19",
+        "brand": "Demo",
+        "model": "M10",
+        "pack_quantity": 1,
+        "size": "M",
+        "title": "Sample 10"
+      },
+      {
+        "product_id": "X20",
+        "brand": "Demo",
+        "model": "M10",
+        "pack_quantity": 2,
+        "size": "M",
+        "title": "Sample 10"
+      }
+    ],
+    "labelled_pairs": [
+      {
+        "a": "X01",
+        "b": "X02",
+        "duplicate": true
+      },
+      {
+        "a": "X03",
+        "b": "X04",
+        "duplicate": true
+      },
+      {
+        "a": "X05",
+        "b": "X06",
+        "duplicate": true
+      },
+      {
+        "a": "X07",
+        "b": "X08",
+        "duplicate": true
+      },
+      {
+        "a": "X09",
+        "b": "X10",
+        "duplicate": true
+      },
+      {
+        "a": "X11",
+        "b": "X12",
+        "duplicate": true
+      },
+      {
+        "a": "X13",
+        "b": "X14",
+        "duplicate": true
+      },
+      {
+        "a": "X15",
+        "b": "X16",
+        "duplicate": true
+      },
+      {
+        "a": "X17",
+        "b": "X18",
+        "duplicate": true
+      },
+      {
+        "a": "X19",
+        "b": "X20",
+        "duplicate": false
+      }
+    ]
+  },
+  "public_checks": [
+    "At least 90% precision on the labelled suggested pairs; show numerator, denominator and recall.",
+    "Zero merges of distinct labelled variants; every merge requires explicit reviewer acceptance.",
+    "Reviewer decisions persist and rescanning does not duplicate accepted work."
+  ],
+  "limit": "Small teaching fixture for a bounded prototype. Market demand, willingness to pay and production performance remain unproven."
+}
