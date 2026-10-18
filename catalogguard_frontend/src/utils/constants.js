@@ -9,7 +9,7 @@ export const FALSE_MERGE_COST_CONFIG = {
 
 export const NAV_ITEMS = [
   { label: "Overview", path: "/dashboard", icon: "layout-dashboard" },
-  { label: "Review queue", path: "/queue", icon: "git-compare", count: "12" },
+  { label: "Review queue", path: "/queue", icon: "git-compare" },
   { label: "Catalogue", path: "/catalogue", icon: "package" },
   { label: "Scan history", path: "/scans", icon: "scan-search" },
   { label: "Evaluation", path: "/evaluation", icon: "chart-no-axes-combined" },

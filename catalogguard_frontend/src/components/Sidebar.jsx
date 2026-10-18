@@ -19,7 +19,7 @@ export default function Sidebar() {
       {NAV_ITEMS.map((item) => {
         const Icon = icons[item.icon] || Box;
         return <NavLink key={item.path} to={item.path} className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
-          <Icon size={18} strokeWidth={1.8} /><span>{item.label}</span>{item.count && <b className="nav-count">{item.count}</b>}
+          <Icon size={18} strokeWidth={1.8} /><span>{item.label}</span>
         </NavLink>;
       })}
     </nav>
