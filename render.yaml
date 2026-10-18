@@ -6,3 +6,14 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     healthCheckPath: /health
+    envVars:
+      - key: REVIEW_DB_PATH
+        value: /tmp/review.db
+      - key: SERVE_FRONTEND
+        value: "false"
+      - key: COOKIE_SAMESITE
+        value: "none"
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: CORS_ORIGINS
+        sync: false

@@ -54,14 +54,22 @@ app = FastAPI(
     version="1.1.0",
 )
 
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173,"
+        "http://localhost:5174,http://127.0.0.1:5174,"
+        "http://localhost:5175,http://127.0.0.1:5175",
+    ).split(",")
+    if origin.strip()
+]
+cookie_samesite = os.getenv("COOKIE_SAMESITE", "lax").lower()
+cookie_secure = os.getenv("COOKIE_SECURE", "false").lower() == "true"
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5174",
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -151,7 +159,8 @@ def register(payload: RegisterRequest, response: Response):
             key=SESSION_COOKIE,
             path="/",
             httponly=True,
-            samesite="lax",
+            secure=cookie_secure,
+            samesite=cookie_samesite,
         )
 
         return {
@@ -188,8 +197,8 @@ def login(payload: LoginRequest, response: Response):
             key=SESSION_COOKIE,
             value=token,
             httponly=True,
-            secure=False,
-            samesite="lax",
+            secure=cookie_secure,
+            samesite=cookie_samesite,
             max_age=43200,
             path="/",
         )
@@ -220,7 +229,8 @@ def logout(request: Request, response: Response):
         key=SESSION_COOKIE,
         path="/",
         httponly=True,
-        samesite="lax",
+        secure=cookie_secure,
+        samesite=cookie_samesite,
     )
 
     return {"message": "Logged out successfully."}

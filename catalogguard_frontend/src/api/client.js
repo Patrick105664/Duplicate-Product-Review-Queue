@@ -4,8 +4,9 @@ export const DEMO_MODE = String(import.meta.env.VITE_DEMO_MODE ?? "true") === "t
 
 export async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
     headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    ...options
+    credentials: "include",
   });
   if (!response.ok) {
     const message = await response.text().catch(() => "");
