@@ -1,0 +1,23 @@
+{
+    "X01|X02": {
+        "product_a": "X01",
+        "product_b": "X02",
+        "decision": "accepted",
+        "evidence": "Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match",
+        "similarity_score": "1.0"
+    },
+    "X03|X04": {
+        "product_a": "X03",
+        "product_b": "X04",
+        "decision": "rejected",
+        "evidence": "Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match",
+        "similarity_score": "1.0"
+    },
+    "X05|X06": {
+        "product_a": "X05",
+        "product_b": "X06",
+        "decision": "rejected",
+        "evidence": "Titles match exactly; Brands match; Models match; Pack quantities match; Sizes match",
+        "similarity_score": "1.0"
+    }
+}
