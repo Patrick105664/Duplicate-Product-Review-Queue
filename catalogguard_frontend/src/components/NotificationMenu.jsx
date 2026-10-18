@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Bell, CircleAlert, GitCompare, Package, ScanSearch, Sparkles, Check, CheckCheck } from "lucide-react";
+import { Bell, CircleAlert, GitCompare, Package, ScanSearch, Sparkles, Check } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useNotifications } from "../hooks/useNotifications";
 

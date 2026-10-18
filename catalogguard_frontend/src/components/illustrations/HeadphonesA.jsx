@@ -37,6 +37,10 @@ export default function HeadphonesA() {
           <stop offset=".5" stopColor="#34453d" />
           <stop offset="1" stopColor="#26372f" />
         </linearGradient>
+        <linearGradient id="headphones-a-reflection" x1="0" y1="0" x2="0" y2="1">
+          <stop stopColor="#526254" stopOpacity=".21" />
+          <stop offset="1" stopColor="#526254" stopOpacity="0" />
+        </linearGradient>
         <linearGradient id="headphones-a-reflection-mask" x1="0" y1="0" x2="0" y2="1">
           <stop stopColor="white" stopOpacity=".5" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
