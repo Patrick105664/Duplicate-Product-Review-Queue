@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from pathlib import Path
 import re
@@ -13,8 +14,9 @@ from app.reviewers import (
 )
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel
+from starlette.staticfiles import StaticFiles
 
 from app.db import get_conn, init_db, save_suggestions
 from app.metrics_store import save_metric_snapshot
@@ -35,6 +37,8 @@ from app.ui_adapter import (
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CORE_DIR = PROJECT_ROOT / "C06_Duplicate_Review"
 FIXTURE_PATH = CORE_DIR / "fixture.json"
+FRONTEND_DIST = PROJECT_ROOT / "catalogguard_frontend" / "dist"
+SERVE_FRONTEND = os.getenv("SERVE_FRONTEND", "false").lower() == "true"
 
 # Make matching_engine.py and evaluation.py importable from the core folder.
 if str(CORE_DIR) not in sys.path:
@@ -62,6 +66,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if SERVE_FRONTEND and (FRONTEND_DIST / "assets").is_dir():
+    app.mount(
+        "/assets",
+        StaticFiles(directory=FRONTEND_DIST / "assets"),
+        name="frontend-assets",
+    )
 
 
 def get_database():
@@ -343,6 +354,10 @@ def run_catalogue_detection(conn):
 
 @app.get("/")
 def root():
+    index_file = FRONTEND_DIST / "index.html"
+    if SERVE_FRONTEND and index_file.is_file():
+        return FileResponse(index_file)
+
     return {
         "message": "Duplicate Product Review Queue API is running"
     }
@@ -563,3 +578,20 @@ def exports(format: str = "csv", type: str = "reviews"):
 
     finally:
         conn.close()
+
+
+if SERVE_FRONTEND and (FRONTEND_DIST / "index.html").is_file():
+    @app.get("/{frontend_path:path}", include_in_schema=False)
+    def frontend_route(frontend_path: str):
+        if frontend_path == "api" or frontend_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="Not found")
+
+        dist_root = FRONTEND_DIST.resolve()
+        requested_file = (dist_root / frontend_path).resolve()
+        if not requested_file.is_relative_to(dist_root):
+            raise HTTPException(status_code=404, detail="Not found")
+
+        if requested_file.is_file():
+            return FileResponse(requested_file)
+
+        return FileResponse(dist_root / "index.html")
